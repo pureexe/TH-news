@@ -1,0 +1,89 @@
+<script>
+ window.fbAsyncInit = function() {
+   FB.init({
+                appId   : '855068644539368', // pure's app id
+                xfbml      : true,
+                version    : 'v2.2'
+            });
+   $(document).trigger('fbInit');
+ };
+ (function(d, s, id){
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+   js = d.createElement(s); js.id = id;
+   js.src = "//connect.facebook.net/th_TH/sdk.js";
+   fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+$(function() {
+
+});
+var post = {};
+function createnews(){
+  var title = $("#news-name").val();
+  var image = $("#news-image").val();
+  var description = $("#news-description").val();
+  if(title!=""&&image!=""&&description!=""){
+    if(image.substring(0,4)!="http"){
+      alert("URL \u0E02\u0E2D\u0E07\u0E23\u0E39\u0E1B\u0E20\u0E32\u0E1E\u0E15\u0E49\u0E2D\u0E07\u0E02\u0E36\u0E49\u0E19\u0E14\u0E49\u0E27\u0E22 http:// \u0E2B\u0E23\u0E37\u0E2D https:// \u0E40\u0E2A\u0E21\u0E2D");
+    }
+    $("#news-name").val("");
+    $("#news-image").val("");
+    $("#news-description").val("");
+    $.post("https://th-news.ml/add",{"title":title,"image":image,"description":description},function(r){
+      if(r.id){
+        post.id = r.id;
+        post.title = title;
+        post.image = image;
+        post.description = description;
+        $("#newsurl").html("https://th-news.ml/news/"+r.id);
+        $('#shareModal').modal();
+
+      }
+    }).fail(function(e){
+      console.log(e);
+      alert("\u0E40\u0E0B\u0E34\u0E1F\u0E40\u0E27\u0E2D\u0E23\u0E4C\u0E21\u0E35\u0E1B\u0E31\u0E0D\u0E2B\u0E32\u0E01\u0E23\u0E38\u0E13\u0E32\u0E15\u0E34\u0E14\u0E15\u0E48\u0E2D\u0E21\u0E32\u0E17\u0E35\u0E48\u0E41\u0E1F\u0E19\u0E40\u0E1E\u0E08 pure\'s app");
+    });
+  }else{
+    alert("\u0E01\u0E23\u0E38\u0E13\u0E32\u0E43\u0E2A\u0E48\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E43\u0E2B\u0E49\u0E04\u0E23\u0E1A");
+  }
+}
+function shareFacebook(){
+  FB.ui({
+    method: 'share',
+    href: 'https://th-news.ml/news/'+post.id,
+  }, function(response){
+    console.log('https://th-news.ml/news/'+post.id);
+    console.log(response);
+  });
+}
+
+</script>
+<div>
+  <div class="rows" style="margin-bottom:7px;">
+    <div class="col-sm-6 col-xs-12" style="padding-right:0px;padding-left: 7px;margin-top:7px;">
+      <input id="news-name" type="text" style="width:100%;" placeholder="ชื่อข่าว">
+    </div>
+    <div class="col-sm-6 col-xs-12" style="padding-right:0px;padding-left: 7px;margin-top:7px;">
+      <input id="news-image" type="text" style="width:100%" placeholder="URL ของภาพประกอบ">
+    </div>
+  </div>
+  <textarea id="news-description" style="width: 99%; margin: 7px; height: 81px;" placeholder="เนื้อหาของข่าวแบบสั้นๆ"></textarea>
+  <center><button style="border-radius:3px;margin-left: 7px;" onclick="createnews()">สร้างข่าวใหม่</button><br><a href="https://www.pureapp.in.th/2015/03/how-to-april.html" style="font-size:70%">วิธีการใช้งาน</a></center>
+</div>
+
+<div class="modal fade" id="shareModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">ข่าวพร้อมแชร์แล้ว</h4>
+      </div>
+      <div class="modal-body">
+        <p>คุณสามารถแบ่งบันข่าวของคุณด้วยลิ้งค์ <span id="newsurl" style="color:red"></span> ผ่านคอมเม้น โพส เพจหรือกลุ่มต่างในเฟสบุ๊คหรือโพสไปยังวอลของคุณผ่านปุ่มด้านล่าง</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="shareFacebook();">โพสไปยังวอล</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <title><%- title %></title>
+    <meta name="description" content="<%- description %>"/>
+    <link rel="canonical" href="http://th-news.ml/news/<%- id %>">
+    <meta property="og:title" content="<%- title %>"/>
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="http://th-news.ml/news/<%- id %>" />
+    <meta property="og:image" content="<%- image %>" />
+    <meta property="og:site_name" content="TH-news.ml" />
+    <meta property="og:description" content="<%- description %>" />
+    <meta property="fb:app_id" content="855068644539368" />
+    <meta name="twitter:title" content="<%- title %>" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:image:src" content="<%- image %>" />
+    <meta name="twitter:site" content="@THnews_ml" />
+    <meta name="twitter:creator" content="@THnews_ml" />
+    <meta name="twitter:domain" content="th-news.ml" />
+    <meta name="twitter:description" content="<%- description %>" />
+    <meta name="twitter:url" content="http://th-news.ml/news/<%- id %>" />
+    <style>
+      body { padding-top: 70px; }
+    </style>
+    <script>
+    window.fbAsyncInit = function() {
+      FB.init({
+                   appId   : '855068644539368',
+                   xfbml      : true,
+                   version    : 'v2.2'
+               });
+      $(document).trigger('fbInit');
+    };
+    (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/th_TH/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+     }(document, 'script', 'facebook-jssdk'));
+    function shareFacebook(){
+      FB.ui({
+        method: 'share',
+        href: 'https://th-news.ml/news/<%- id %>',
+      }, function(response){
+        console.log('https://th-news.ml/news/<%- id %>');
+        console.log(response);
+      });
+    }
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">สำนักข่าว TH-News</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="https://www.pureapp.in.th/p/april.html">สร้างข่าวปลอม</a></li>
+            <li><a href="javascript:shareFacebook()">แชร์ข่าวนี้</a></li>
+            <li><a href="https://www.pureapp.in.th/2015/03/april-fool-day.html">ที่มาของเว็บนี้</a></li>
+            <li><a href="https://www.pureapp.in.th/p/term-thnews.html">เงื่อนไขในการใช้งาน</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+      <center>
+        <img src="https://static.th-news.ml/traped.png" class="img-responsive" width="300" height="300"/>
+        <h1>โดนหลอกแล้ว</h1>
+        <h3>Happy April Fool's day</h3>
+        <h3>มีคนโดนหลอกเรื่อง<%- title %>แล้ว <%- view %> คน</h3>
+        <a class="btn btn-primary" href="javascript:shareFacebook()">แชร์ข่าวนี้ต่อ</a> <a href="https://www.pureapp.in.th/p/april.html" class="btn btn-default">สร้างข่าวปลอมใหม่</a>
+      </center>
+    </div>
+  </body>
+</html>
